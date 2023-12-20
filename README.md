@@ -1,13 +1,12 @@
-# Deploying  Swiggy clone app in Kubernetes Cluster using CICD Pipeline.
+# Deploying Swiggy Clone App in Kubernetes Cluster using CI/CD Pipeline
 
 <div align="center">
   <img src="https://i.ytimg.com/vi/dMVrwaYojYs/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDFY-RWFRoPVJ8Cl1R4nXXC4ay1Ng" alt="Logo" width="90%" height="90%">
-  <p align="center"</p>
 </div>
 
+## Pipeline Script
 
-### Pipeline Script
-
+```groovy
 pipeline {
     agent any
     
@@ -33,7 +32,7 @@ pipeline {
             }
         }
         
-        stage("Sonarqube Analysis ") {
+        stage("Sonarqube Analysis") {
             steps {
                 withSonarQubeEnv('SonarQube-Server') {
                     sh ''' 
@@ -69,8 +68,8 @@ pipeline {
                 script {
                     withDockerRegistry(credentialsId: 'dockerhub', toolName: 'docker') {   
                         sh "docker build -t swiggy-clone ."
-                        sh "docker tag swiggy-clone username/swiggy-clone:latest "
-                        sh "docker push username/swiggy-clone:latest "
+                        sh "docker tag swiggy-clone username/swiggy-clone:latest"
+                        sh "docker push username/swiggy-clone:latest"
                     }
                 }
             }
@@ -97,5 +96,3 @@ pipeline {
         }
     }
 }
-
-
